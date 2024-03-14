@@ -9,6 +9,7 @@
 #define MODBUS_INC_MODBUS_H_
 
 
+#include "modbus_device.h"
 
 
 

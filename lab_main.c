@@ -83,6 +83,8 @@ void main(void)
 
 	Board_init();
 
+	EPWM_setTimeBaseCounterMode(modbus_timer_BASE,EPWM_COUNTER_MODE_UP);
+
     //
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
     //
