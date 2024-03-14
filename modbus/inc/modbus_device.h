@@ -14,6 +14,9 @@
 
 
 
+extern void start_modbus_timer(void);
+extern bool get_modbus_timer_expired(void);
+
 
 
 #endif /* MODBUS_INC_MODBUS_DEVICE_H_ */
