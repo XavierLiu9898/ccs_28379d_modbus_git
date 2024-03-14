@@ -8,25 +8,40 @@
 
 #include "modbus_device.h"
 
-void start_modbus_timer(void)
+bool modbus_check_msg(char *msg)
 {
-    EPWM_setTimeBaseCounterMode(modbus_timer_BASE,EPWM_COUNTER_MODE_STOP_FREEZE); //stop timer
-    EPWM_setTimeBaseCounter(modbus_timer_BASE,0);  //reset counter value
-    EPWM_clearEventTriggerInterruptFlag(modbus_timer_BASE);  //clear flag.
-    EPWM_clearEventTriggerInterruptFlag(modbus_timer_BASE);  //clear flag in case there is a pending flag.
-    EPWM_setTimeBaseCounterMode(modbus_timer_BASE,EPWM_COUNTER_MODE_UP);  //start timer
+    uint32_t base = modbus_sci_BASE;
+
+    if(SCI_getRxFIFOStatus(base) == SCI_FIFO_RX0) //no new message.
+        return false;
+    //new message received.
+    *msg = SCI_readCharNonBlocking(base);
+    return true;
 }
 
-bool get_modbus_timer_expired(void)
+
+void modbus_start_timer(void)
 {
+    uint16_t base = modbus_timer_BASE;
+
+    EPWM_setTimeBaseCounterMode(base,EPWM_COUNTER_MODE_STOP_FREEZE); //stop timer
+    EPWM_setTimeBaseCounter(base,0);  //reset counter value
+    EPWM_clearEventTriggerInterruptFlag(base);  //clear flag.
+    EPWM_clearEventTriggerInterruptFlag(base);  //clear flag in case there is a pending flag.
+    EPWM_setTimeBaseCounterMode(base,EPWM_COUNTER_MODE_UP);  //start timer
+}
+
+bool modbus_get_timer_expired(void)
+{
+    uint16_t base = modbus_timer_BASE;
     bool flag;
-    flag = EPWM_getEventTriggerInterruptStatus(modbus_timer_BASE); //get timer expired flag.
+    flag = EPWM_getEventTriggerInterruptStatus(base); //get timer expired flag.
     if(flag) //if timer expired
     {
-        EPWM_setTimeBaseCounterMode(modbus_timer_BASE,EPWM_COUNTER_MODE_STOP_FREEZE); //stop timer
-        EPWM_setTimeBaseCounter(modbus_timer_BASE,0);  //reset counter value
-        EPWM_clearEventTriggerInterruptFlag(modbus_timer_BASE);  //clear flag.
-        EPWM_clearEventTriggerInterruptFlag(modbus_timer_BASE);  //clear flag in case there is a pending flag.
+        EPWM_setTimeBaseCounterMode(base,EPWM_COUNTER_MODE_STOP_FREEZE); //stop timer
+        EPWM_setTimeBaseCounter(base,0);  //reset counter value
+        EPWM_clearEventTriggerInterruptFlag(base);  //clear flag.
+        EPWM_clearEventTriggerInterruptFlag(base);  //clear flag in case there is a pending flag.
     }
     return flag;
 

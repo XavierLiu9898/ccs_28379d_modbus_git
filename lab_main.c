@@ -62,6 +62,11 @@
 #include "device.h"
 #include "board.h"
 
+#include "modbus.h"
+
+char msg = (uint16_t)0;
+uint16_t msg_cnt = 0;
+
 //
 // Main
 //
@@ -93,6 +98,7 @@ void main(void)
 
     while(1)
     {
+        if(modbus_check_msg(&msg)) msg_cnt ++;
     }	
 	
 }

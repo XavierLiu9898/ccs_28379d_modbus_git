@@ -13,7 +13,7 @@
 #include "board.h"
 
 
-
+extern bool modbus_check_msg(char *msg);
 extern void start_modbus_timer(void);
 extern bool get_modbus_timer_expired(void);
 
