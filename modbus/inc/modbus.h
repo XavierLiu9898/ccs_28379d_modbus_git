@@ -1,7 +1,7 @@
 /*
  * modbus.h
  *
- *  Created on: 2024Äê3ÔÂ14ÈÕ
+ *  Created on: 2024ï¿½ï¿½3ï¿½ï¿½14ï¿½ï¿½
  *      Author: Xavier
  */
 
@@ -31,8 +31,8 @@ typedef enum
 
 typedef enum
 {
-    modbus_read_holding_registers,
-    modbus_write_single_register,
+    modbus_read_holding_registers = 0x03,
+    modbus_write_single_register = 0x06,
 } modbus_function_code_e;
 
 typedef struct
@@ -41,7 +41,7 @@ typedef struct
     modbus_error_state_e error_state;
 
     bool initial_state_flag; //flag set when first time in initial
-    bool control_pending_flag;
+    bool tx_rdy_flag;
     uint16_t exception_code;
 
     char rx_buff[MSG_BUFF_LENGTH];
@@ -49,15 +49,19 @@ typedef struct
 
     char tx_buff[MSG_BUFF_LENGTH];
     uint16_t tx_index;
+    
 
     uint16_t *reg[REGISTER_LENGTH];
 } modbus_obj_type;
 
 extern void modbus_fsm(modbus_obj_type *obj);
 extern void modbus_control(modbus_obj_type *obj);
+
+
 extern void modbus_read_holding_registers_callbackfcn(modbus_obj_type *obj);
+extern void modbus_write_single_register_callbackfcn(modbus_obj_type *obj);
 
 
 extern bool modbus_check_quality_isvalid(uint16_t quality);
-extern bool modbus_check_ads_isvalid(uint16_t start_ads,uint16_t quality);
+extern bool modbus_check_ads_isvalid(uint16_t ads);
 #endif /* MODBUS_INC_MODBUS_H_ */
