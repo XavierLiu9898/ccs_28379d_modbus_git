@@ -12,10 +12,13 @@
 #include "device.h"
 #include "board.h"
 
+#define MSG_BUFF_LENGTH 256
+#define REGISTER_LENGTH 256
+
 
 extern bool modbus_check_msg(char *msg);
-extern void start_modbus_timer(void);
-extern bool get_modbus_timer_expired(void);
+extern void modbus_start_timer(void);
+extern bool modbus_check_timer_expired(void);
 
 
 

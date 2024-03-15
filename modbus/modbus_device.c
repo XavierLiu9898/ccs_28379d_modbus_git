@@ -31,7 +31,7 @@ void modbus_start_timer(void)
     EPWM_setTimeBaseCounterMode(base,EPWM_COUNTER_MODE_UP);  //start timer
 }
 
-bool modbus_get_timer_expired(void)
+bool modbus_check_timer_expired(void)
 {
     uint16_t base = modbus_timer_BASE;
     bool flag;
