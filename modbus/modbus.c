@@ -43,6 +43,7 @@ void modbus_fsm(modbus_obj_type *obj) {
     break;
 
   case modbus_idle:
+    if (obj->tx_rdy_flag) obj->state = modbus_emission;
     if (new_msg_flag) // first message received.
     {
       modbus_start_timer();
@@ -68,7 +69,8 @@ void modbus_fsm(modbus_obj_type *obj) {
     obj->state = modbus_error;
     break;
   case modbus_emission:
-		obj->tx_rdy_flag = false;
+    mod_bus_send_msg(obj->tx_buff,obj->tx_index);
+	obj->tx_rdy_flag = false;
     obj->rx_index = 0; // reset index.
     obj->state = modbus_idle;		
 		break;
@@ -110,9 +112,8 @@ void modbus_read_holding_registers_callbackfcn(modbus_obj_type *obj) {
   uint16_t quality;
   uint16_t read_cnt = 0;
   uint16_t tmp_read_value = 0;
-  start_ads = ((uint16_t)obj->rx_buff[1]) << 8 + (uint16_t)obj->rx_buff[2];
-  quality = ((uint16_t)obj->rx_buff[3]) << 8 + (uint16_t)obj->rx_buff[4];
-
+  start_ads = modbus_char_to_uint16(obj->rx_buff[1],obj->rx_buff[2]);
+  quality = modbus_char_to_uint16(obj->rx_buff[3],obj->rx_buff[4]);
   if (modbus_check_quality_isvalid(quality) == false) //quality not valid
   {
     obj->exception_code = 0x03;
@@ -154,8 +155,8 @@ void modbus_write_single_register_callbackfcn(modbus_obj_type *obj) {
   uint16_t ads; // write register address.
   uint16_t val; // write register value.
 
-  ads = ((uint16_t)(obj->rx_buff[1])) << 8 + (uint16_t)(obj->rx_buff[2]);
-  val = ((uint16_t)(obj->rx_buff[3])) << 8 + (uint16_t)(obj->rx_buff[4]);
+  ads = modbus_char_to_uint16(obj->rx_buff[1],obj->rx_buff[2]);
+  val = modbus_char_to_uint16(obj->rx_buff[3],obj->rx_buff[4]);
 
   if (modbus_check_ads_isvalid(ads) == false) // address not valid
   {

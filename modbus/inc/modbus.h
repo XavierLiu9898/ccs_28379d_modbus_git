@@ -54,6 +54,8 @@ typedef struct
 } modbus_obj_type;
 
 
+#define modbus_char_to_uint16(a,b) ((((uint16_t)(a)) << 8) + ((uint16_t)(b)))
+
 extern modbus_obj_type modbus_obj;
 
 
