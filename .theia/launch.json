@@ -1,0 +1,11 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "syscfg_lp_f2837xd",
+            "type": "ccs-debug",
+            "request": "launch",
+            "project": "syscfg_lp_f2837xd"
+        }
+    ]
+}

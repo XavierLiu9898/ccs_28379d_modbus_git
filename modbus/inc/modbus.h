@@ -56,5 +56,8 @@ typedef struct
 extern void modbus_fsm(modbus_obj_type *obj);
 extern void modbus_control(modbus_obj_type *obj);
 extern void modbus_read_holding_registers_callbackfcn(modbus_obj_type *obj);
+
+
+extern bool modbus_check_quality_isvalid(uint16_t quality);
 extern bool modbus_check_ads_isvalid(uint16_t start_ads,uint16_t quality);
 #endif /* MODBUS_INC_MODBUS_H_ */

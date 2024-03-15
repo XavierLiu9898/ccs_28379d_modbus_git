@@ -15,4 +15,5 @@
 	<origin value="C:\ti\C2000Ware_5_00_00_00\training\device\f2837xd\getting_started\lab_blinkyled_sysconfig\lab_blinkyled_launchpad.projectspec"/>
 	<filesToOpen value=""/>
 	<isTargetManual value="false"/>
+	<activeTargetConfiguration value="targetConfigs/TMS320F28379D.ccxml"/>
 </projectOptions>
