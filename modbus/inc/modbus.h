@@ -11,7 +11,6 @@
 
 #include "modbus_device.h"
 
-
 typedef enum
 {
     modbus_initial_state = 0,
@@ -53,6 +52,10 @@ typedef struct
 
     uint16_t *reg[REGISTER_LENGTH];
 } modbus_obj_type;
+
+
+extern modbus_obj_type modbus_obj;
+
 
 extern void modbus_fsm(modbus_obj_type *obj);
 extern void modbus_control(modbus_obj_type *obj);

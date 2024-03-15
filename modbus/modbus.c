@@ -6,7 +6,10 @@
  */
 
 #include "modbus.h"
-#include "cpu.h"
+
+
+
+modbus_obj_type modbus_obj;
 
 void modbus_fsm(modbus_obj_type *obj) {
   bool new_msg_flag;
