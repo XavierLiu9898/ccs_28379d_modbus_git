@@ -196,7 +196,7 @@ void modbus_write_multiple_registers_callbackfcn(modbus_obj_type *obj) {
   byte_cnt = (uint16_t)(obj->rx_buff[5]); // byte count.
 
   if ((modbus_check_quality_isvalid(quality) == false) || // is quality valid?
-      (quality != byte_cnt * 2)) { // is byte count valid?
+      (quality * 2 != byte_cnt)) { // is byte count valid?
     obj->exception_code = 0x03;
     return;
   }
@@ -217,11 +217,12 @@ void modbus_write_multiple_registers_callbackfcn(modbus_obj_type *obj) {
   EINT;
 
   // update tx buff
-  obj->tx_buff[0] = modbus_write_multiple_registers; // fcn code.
+  obj->tx_buff[0] = (char)modbus_write_multiple_registers; // fcn code.
   modbus_uint16_to_char(start_ads, obj->tx_buff[1],
                         obj->tx_buff[2]); // starting address.
   modbus_uint16_to_char(quality, obj->tx_buff[3],
                         obj->tx_buff[4]); //  quality.
+  obj->tx_index = 5;
 }
 
 bool modbus_check_quality_isvalid(uint16_t quality) {
