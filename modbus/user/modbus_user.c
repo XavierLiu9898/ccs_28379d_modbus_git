@@ -7,15 +7,14 @@
 
 #include "modbus_user.h"
 
-uint16_t user_modbus_reg[10];
+float32_t user_modbus_reg[3] = {0.1f, 0.2f, 0.3f};
 
 // this function needs to be called at system starup to initialize the modbus
 // register addresses.
 void modbus_user_initial(modbus_obj_type *obj) {
-  uint16_t index;
 
   // initial register address.
-  for (index = 0; index < 10; index++) {
-    obj->reg[index] = &(user_modbus_reg[index]);
-  }
+  obj->reg[0] = (uint16_t *)&(user_modbus_reg[0]) + 1;
+  obj->reg[1] = (uint16_t *)&(user_modbus_reg[0]);
+
 }

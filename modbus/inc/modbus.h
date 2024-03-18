@@ -9,6 +9,13 @@
 #define MODBUS_INC_MODBUS_H_
 
 #include "modbus_device.h"
+#include "crc.h"
+
+typedef enum
+{
+	modbus_adu,
+	modbus_pdu,
+} modbus_data_unit_mode_e;
 
 typedef enum {
   modbus_initial_state = 0,
@@ -29,6 +36,11 @@ typedef enum {
   modbus_write_single_register = 0x06,
   modbus_write_multiple_registers = 0x10,
 } modbus_function_code_e;
+
+#define MODBUS_DATA_UNIT_MODE modbus_adu
+#if MODBUS_DATA_UNIT_MODE == modbus_adu
+#define MODBUS_SLAVE_ADDRESS 0x01
+#endif
 
 typedef struct {
   modbus_state_e state;

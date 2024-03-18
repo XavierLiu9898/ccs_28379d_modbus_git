@@ -49,6 +49,7 @@
 									<listOptionValue builtIn="false" value="${COM_TI_C2000WARE_SOFTWARE_PACKAGE_INCLUDE_PATH}"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}/modbus/inc"/>
+									<listOptionValue builtIn="false" value="${PROJECT_ROOT}/modbus/user/inc"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}/device"/>
 									<listOptionValue builtIn="false" value="${C2000WARE_DLIB_ROOT}"/>
 									<listOptionValue builtIn="false" value="${CG_TOOL_ROOT}/include"/>

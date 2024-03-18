@@ -6,7 +6,7 @@
 
 #include "modbus.h"
 
-extern uint16_t user_modbus_reg[10];
+extern float32_t user_modbus_reg[3];
 extern void modbus_user_initial(modbus_obj_type *obj);
 
 
