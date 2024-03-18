@@ -47,16 +47,17 @@ typedef struct {
   modbus_error_state_e error_state;
 
   bool initial_state_flag; // flag set when first time in initial
-  bool tx_rdy_flag;
-  uint16_t exception_code;
+  bool tx_rdy_flag; //transition  pending flag.
+  uint16_t exception_code; //exception code value.
 
-  char rx_buff[MSG_BUFF_LENGTH];
-  uint16_t rx_index;
+  char rx_buff[MSG_BUFF_LENGTH]; //receive buff.
+  uint16_t rx_index; //index indicating the length of the receive message.
+  uint16_t rx_head; //read receive message head.
 
-  char tx_buff[MSG_BUFF_LENGTH];
-  uint16_t tx_index;
+  char tx_buff[MSG_BUFF_LENGTH]; //transition buff.
+  uint16_t tx_index; //index indicating the length of the transition message.
 
-  uint16_t *reg[REGISTER_LENGTH];
+  uint16_t *reg[REGISTER_LENGTH]; //register address list. require user initialization.
 } modbus_obj_type;
 
 #define modbus_char_to_uint16(hi, lo)                                          \
@@ -77,6 +78,10 @@ extern void modbus_read_holding_registers_callbackfcn(modbus_obj_type *obj);
 extern void modbus_write_single_register_callbackfcn(modbus_obj_type *obj);
 extern void modbus_write_multiple_registers_callbackfcn(modbus_obj_type *obj);
 
+extern void modbus_load8_tx_buff(modbus_obj_type *obj, char val);
+extern void modbus_load16_tx_buff(modbus_obj_type *obj, uint16_t val);
+extern char modbus_read8_rx_buff(modbus_obj_type *obj);
+extern uint16_t modbus_read16_rx_buff(modbus_obj_type *obj);
 extern bool modbus_check_quality_isvalid(uint16_t quality);
 extern bool modbus_check_ads_isvalid(uint16_t ads);
 #endif /* MODBUS_INC_MODBUS_H_ */
