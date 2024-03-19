@@ -83,6 +83,9 @@ void modbus_fsm(modbus_obj_type *obj)
 void modbus_control(modbus_obj_type *obj)
 {
 
+	/*reset receive message read head*/
+	obj->rx_head = 0;
+
 #if MODBUS_DATA_UNIT_MODE == modbus_adu
 	/*address check*/
 	char rx_ads = modbus_read8_rx_buff(obj);
